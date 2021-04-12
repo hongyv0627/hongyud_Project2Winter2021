@@ -121,7 +121,7 @@ class NearbyPlaces:
         return f"{self.name} ({self.category}): {self.address}, {self.city_name}"
 
 
-CACHE_DICT = {}
+#CACHE_DICT = {}
 CACHE_FILENAME = 'cache_NPS.json'
 CACHE_DICT = open_cache(CACHE_FILENAME)
 headers = {'User-Agent': 'UMSI 507 Course Project 2 - Python Web Scraping','From': 'hongyud@umich.edu','Course-Info': 'https://www.si.umich.edu/programs/courses/507'}
@@ -402,7 +402,7 @@ if __name__ == "__main__":
             continue
         elif input_value.lower() in state_names_lower:
             state_abbrev = us_state_abbrev[input_value.title()]
-            state_url = f"https://www.nps.gov/state/{state_abbrev}/index.htm"
+            state_url = f"https://www.nps.gov/state/{state_abbrev.lower()}/index.htm"
             nps_instance_list = get_sites_for_state(state_url)
             print(" ")
             print("----------------------------------------------")
