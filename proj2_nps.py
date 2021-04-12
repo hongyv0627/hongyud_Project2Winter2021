@@ -121,7 +121,7 @@ class NearbyPlaces:
         return f"{self.name} ({self.category}): {self.address}, {self.city_name}"
 
 
-#CACHE_DICT = {}
+
 CACHE_FILENAME = 'cache_NPS.json'
 CACHE_DICT = open_cache(CACHE_FILENAME)
 headers = {'User-Agent': 'UMSI 507 Course Project 2 - Python Web Scraping','From': 'hongyud@umich.edu','Course-Info': 'https://www.si.umich.edu/programs/courses/507'}
@@ -324,68 +324,7 @@ def append_nearby_places_list(api_url_json):
     return nearby_place_list
 
     
-us_state_abbrev = {
-    'Alabama': 'AL',
-    'Alaska': 'AK',
-    'American Samoa': 'AS',
-    'Arizona': 'AZ',
-    'Arkansas': 'AR',
-    'California': 'CA',
-    'Colorado': 'CO',
-    'Connecticut': 'CT',
-    'Delaware': 'DE',
-    'District of Columbia': 'DC',
-    'Florida': 'FL',
-    'Georgia': 'GA',
-    'Guam': 'GU',
-    'Hawaii': 'HI',
-    'Idaho': 'ID',
-    'Illinois': 'IL',
-    'Indiana': 'IN',
-    'Iowa': 'IA',
-    'Kansas': 'KS',
-    'Kentucky': 'KY',
-    'Louisiana': 'LA',
-    'Maine': 'ME',
-    'Maryland': 'MD',
-    'Massachusetts': 'MA',
-    'Michigan': 'MI',
-    'Minnesota': 'MN',
-    'Mississippi': 'MS',
-    'Missouri': 'MO',
-    'Montana': 'MT',
-    'Nebraska': 'NE',
-    'Nevada': 'NV',
-    'New Hampshire': 'NH',
-    'New Jersey': 'NJ',
-    'New Mexico': 'NM',
-    'New York': 'NY',
-    'North Carolina': 'NC',
-    'North Dakota': 'ND',
-    'Northern Mariana Islands':'MP',
-    'Ohio': 'OH',
-    'Oklahoma': 'OK',
-    'Oregon': 'OR',
-    'Pennsylvania': 'PA',
-    'Puerto Rico': 'PR',
-    'Rhode Island': 'RI',
-    'South Carolina': 'SC',
-    'South Dakota': 'SD',
-    'Tennessee': 'TN',
-    'Texas': 'TX',
-    'Utah': 'UT',
-    'Vermont': 'VT',
-    'Virgin Islands': 'VI',
-    'Virginia': 'VA',
-    'Washington': 'WA',
-    'West Virginia': 'WV',
-    'Wisconsin': 'WI',
-    'Wyoming': 'WY'
-}
 
-state_names_lower = []
-for key in us_state_abbrev:
-    state_names_lower.append(key.lower())
 
 
 if __name__ == "__main__":
@@ -397,12 +336,14 @@ if __name__ == "__main__":
             print('Bye!')
             break 
 
-        if input_value.lower() not in state_names_lower:
+        state_url_dict = build_state_url_dict()
+
+        if input_value.lower() not in state_url_dict.keys():
             print("[Error] Enter proper state name")
             continue
-        elif input_value.lower() in state_names_lower:
-            state_abbrev = us_state_abbrev[input_value.title()]
-            state_url = f"https://www.nps.gov/state/{state_abbrev.lower()}/index.htm"
+
+        elif input_value.lower() in state_url_dict.keys():
+            state_url = state_url_dict[input_value.lower()]
             nps_instance_list = get_sites_for_state(state_url)
             print(" ")
             print("----------------------------------------------")
